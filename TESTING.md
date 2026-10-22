@@ -1,17 +1,30 @@
-# Testing BurntToast 0.1.1
+# Testing BurntToast 0.1.2
 
 ## Automated checks
 
 Run `python .github/scripts/check.py` for include paths, option discovery and
-defaults, Iris clear-color directive syntax, hand-mask routing, version consistency, reproducible ZIP layout, and
+defaults, Iris clear-color and commented format directive syntax, hand-mask
+routing, version consistency, reproducible ZIP layout, and
 CPU reference checks for fog boundaries, blur energy and minimum illumination.
 
 Run `python .github/scripts/validate.py` for standalone GLSL 330 compatibility
 compilation and vertex/fragment linking: 88 program pairs across eight variants
 (704 pair validations). Variants cover default, disabled features, enabled water
 effects/ACES/gamma, Fast, minimum/maximum values, hand exclusion off, and all fog
-categories off. Includes and OpenGL format macros are expanded for glslang;
-this is not Iris's actual shader transformation pipeline.
+categories off. Includes are expanded and only MC_VERSION / IS_IRIS environment
+macros are supplied; format symbols are not injected. This is not Iris's actual
+shader transformation pipeline.
+
+An optional check uses the real directive parser from an installed Iris JAR,
+without starting Minecraft or creating an OpenGL context. With a matching JDK
+installed, run:
+
+```sh
+python .github/scripts/check_iris.py --iris-jar /path/to/iris.jar --libraries /path/to/PrismLauncher/libraries
+```
+
+This checks all four composite entry points with Iris's own format, clear-flag
+and four-component clear-color handlers. It passed locally with Iris 1.11.4.
 
 Compilation and CPU checks do not establish visual correctness, compatibility
 with every resource pack/mod, or GPU performance.
@@ -48,6 +61,6 @@ and Iris's `patched_shaders` directory. These can be inspected without GUI input
 
 ## Release gate
 
-The public repository and draft v0.1.1 release are prepared after automated
+The public repository and draft v0.1.2 release are prepared after automated
 checks. Publish the draft only after the user confirms the visual checks pass.
 Retain any limitations and measured performance results in the release notes.

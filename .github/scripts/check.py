@@ -99,6 +99,18 @@ class PackChecks(unittest.TestCase):
                 validate.validate_iris_directives(f"const vec4 colortex2ClearColor = {invalid};")
         validate.validate_iris_directives("const vec4 colortex2ClearColor = vec4(0.0, 0.0, 0.0, 0.0);")
 
+    def test_format_directives_are_comments_not_glsl_constants(self):
+        source = (SHADERS / "lib/buffers.glsl").read_text()
+        comments = "\n".join(re.findall(r"/\*(.*?)\*/", source, re.S))
+        formats = dict(re.findall(r"(?m)^const int (colortex\d+Format) = (\w+);$", comments))
+        self.assertEqual(formats, {"colortex0Format": "RGB8", "colortex1Format": "R11F_G11F_B10F",
+                                   "colortex2Format": "R8", "colortex4Format": "R11F_G11F_B10F"})
+        executable = re.sub(r"/\*.*?\*/|//[^\n]*", "", source, flags=re.S)
+        self.assertNotRegex(executable, r"const int colortex\d+Format")
+        validator_source = (ROOT / ".github/scripts/validate.py").read_text()
+        for name in ("RGB8", "R8", "R11F_G11F_B10F"):
+            self.assertNotIn(f"#define {name} ", validator_source)
+
     def test_disabling_boolean_does_not_remove_next_option(self):
         source = validate.expand(SHADERS / "world0/composite.fsh", {"FOG_ENABLED": None})
         self.assertIn("#define FOG_START 0.90", source)

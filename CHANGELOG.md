@@ -1,6 +1,14 @@
 # Changelog
 
-## 0.1.1 — awaiting visual testing
+## 0.1.2 — awaiting visual testing
+
+- Fix composite compilation failures for undeclared RGB8, R8 and R11F_G11F_B10F.
+  Keep Iris format directives inside a block comment, as required by ShaderDoc.
+- Remove fabricated format macros from the standalone compiler environment so
+  it can reproduce and catch this failure.
+- Add a format-directive regression check. Retain the v0.1.1 clear-color fix.
+
+## 0.1.1 — superseded by 0.1.2
 
 - Fix Iris pack-load crash in DispatchingDirectiveHolder: use four explicit float
   literals for colortex2ClearColor instead of GLSL's scalar vec4 constructor.

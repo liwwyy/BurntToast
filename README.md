@@ -1,6 +1,6 @@
 # BurntToast (Chocapic13' Shaders edit)
 
-An Iris shaderpack based on Chocapic13 High Performance Toaster. Version 0.1.1
+An Iris shaderpack based on Chocapic13 High Performance Toaster. Version 0.1.2
 adds motion blur, readable darkness, neutral hand and entity lighting, edge-only
 fog controls, and transparent water from YoFPS.
 
@@ -24,7 +24,7 @@ LOD rendering are not implemented.
 
 ## Install
 
-Download `BurntToast_v0.1.1_.Chocapic13_Toaster_edit.zip` from a GitHub release,
+Download `BurntToast_v0.1.2_.Chocapic13_Toaster_edit.zip` from a GitHub release,
 place it in your Minecraft `shaderpacks` directory, then select it in Iris.
 The build is targeted at Minecraft 26.2 with Iris 1.11.4. Other versions have
 not been tested.
@@ -61,7 +61,7 @@ python .github/scripts/package.py
 
 The ZIP and SHA-256 checksum are written to `dist/`. Reference ZIPs, build files,
 and development tooling are excluded. Release tags must match `VERSION`.
-Tags such as `v0.1.1` create **draft** GitHub releases; publish after visual testing.
+Tags such as `v0.1.2` create **draft** GitHub releases; publish after visual testing.
 
 Standalone compilation and numerical checks do not establish in-game rendering
 correctness or FPS gains. See [TESTING.md](TESTING.md) and

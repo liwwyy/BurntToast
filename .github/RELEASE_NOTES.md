@@ -1,9 +1,13 @@
-BurntToast (Chocapic13' Shaders edit) v0.1.1
+BurntToast (Chocapic13' Shaders edit) v0.1.2
 
-Fixes the Iris shaderpack-load crash (`ArrayIndexOutOfBoundsException` in
-`DispatchingDirectiveHolder.processDirective`). The hand-mask clear color now
-uses four explicit float literals, as required by Iris's directive parser.
-A regression check catches scalar constructors that GLSL compilation accepts.
+Fixes composite compilation errors for undeclared `RGB8`, `R8`, and
+`R11F_G11F_B10F`. Format directives now use the block-comment syntax required
+by Iris ShaderDoc. Validation no longer fabricates these missing GLSL constants
+and reproduces the original failure before the fix. Includes the v0.1.1
+four-value clear-color directive fix.
+
+Also checked the format and clear-color metadata using the directive parser
+from the installed Iris 1.11.4 JAR, without starting Minecraft or using a GUI.
 
 Includes camera motion blur with CH Motion-compatible settings, hand/held-item blur
 exclusion, neutral hand/entity lighting, a minimum visibility floor, configurable

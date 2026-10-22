@@ -89,8 +89,9 @@ def compile_pair(task):
         target = out / (path.stem + stage)
         source = expand(original, overrides)
         validate_iris_directives(source)
-        # Iris injects OpenGL format names into shader source; standalone GLSL does not.
-        source = source.replace("#version 330 compatibility", "#version 330 compatibility\n#define MC_VERSION 260200\n#define IS_IRIS\n#define RGB8 32849\n#define R8 33321\n#define R11F_G11F_B10F 35898")
+        # Supply only actual Iris environment macros. Format symbols are not GLSL
+        # constants and must never be fabricated here to make a broken pack pass.
+        source = source.replace("#version 330 compatibility", "#version 330 compatibility\n#define MC_VERSION 260200\n#define IS_IRIS")
         target.write_text(source)
         sources.append(str(target))
     result = subprocess.run(["glslangValidator", "-l", *sources], capture_output=True, text=True)
