@@ -1,0 +1,61 @@
+name: Validate and package
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Install GLSL compiler
+        run: sudo apt-get update && sudo apt-get install -y glslang-tools
+      - name: Check pack contracts
+        run: python .github/scripts/check.py
+      - name: Compile and link shader variants
+        run: python .github/scripts/validate.py
+      - name: Check release tag
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          test "$RELEASE_TAG" = "v$(cat VERSION)"
+      - name: Package ZIP and checksum
+        run: python .github/scripts/package.py
+      - uses: actions/upload-artifact@v7
+        with:
+          name: BurntToast
+          path: dist/*
+          if-no-files-found: error
+
+  draft-release:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - run: python .github/scripts/package.py
+      - name: Create draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          gh release create "$RELEASE_TAG" dist/*.zip dist/*.sha256 \
+            --verify-tag --draft \
+            --title "BurntToast $RELEASE_TAG (Chocapic13' Shaders edit)" \
+            --notes-file .github/RELEASE_NOTES.md

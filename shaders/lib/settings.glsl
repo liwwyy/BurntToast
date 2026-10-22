@@ -1,0 +1,56 @@
+#ifndef BURNTTOAST_SETTINGS
+#define BURNTTOAST_SETTINGS
+// BurntToast 0.1.0 (Chocapic13' Shaders edit)
+// CH Motion-compatible controls; implementation is original to BurntToast.
+#define MOTION_BLUR
+#define MOTION_BLUR_NOISE
+#define MOTION_BLUR_STRENGTH 5.5 // [0.5 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0 5.5 6.0 6.5 7.0 7.5 8.0 8.5 9.0 9.5 10.0]
+#define MOTION_BLUR_SAMPLES 8 // [4 6 8 10 12 16 20 24]
+#define VANILLA_GAMMA 1.0 // [1.0 1.05 1.1 1.15 1.2 1.25 1.3 1.35 1.4 1.5]
+#define EXCLUDE_HAND_MOTION_BLUR
+#define REMOVE_HAND_TINT
+#define REMOVE_ENTITY_DIMENSION_TINT
+#define MINIMUM_VISIBILITY
+#define MIN_VISIBILITY_STRENGTH 0.04 // [0.0 0.01 0.02 0.03 0.04 0.05 0.06 0.08 0.10 0.12 0.16 0.20]
+#define FOG_ENABLED
+#define FOG_START 0.90 // [0.0 0.25 0.5 0.6 0.7 0.75 0.8 0.85 0.90 0.95 0.98]
+#define FOG_END 1.0 // [0.25 0.5 0.75 0.85 0.90 0.95 1.0]
+#define FOG_STRENGTH 0.25 // [0.0 0.1 0.15 0.20 0.25 0.35 0.5 0.75 1.0]
+#define FOG_DAY
+#define FOG_NIGHT
+#define FOG_RAIN
+#define FOG_NETHER
+#define FOG_END_DIMENSION
+#define FOG_WATER
+#define FOG_LAVA
+#define FOG_POWDER_SNOW
+#define FOG_BLINDNESS
+#define FOG_DARKNESS
+#define FOG_DAY_STRENGTH 1.0 // [0.0 0.25 0.5 0.75 1.0 1.5 2.0]
+#define FOG_NIGHT_STRENGTH 1.0 // [0.0 0.25 0.5 0.75 1.0 1.5 2.0]
+#define FOG_RAIN_STRENGTH 1.0 // [0.0 0.25 0.5 0.75 1.0 1.5 2.0]
+#define FOG_NETHER_STRENGTH 1.0 // [0.0 0.25 0.5 0.75 1.0 1.5 2.0]
+#define FOG_END_STRENGTH 1.0 // [0.0 0.25 0.5 0.75 1.0 1.5 2.0]
+#define FOG_WATER_STRENGTH 1.0 // [0.0 0.25 0.5 0.75 1.0 1.5 2.0]
+#define FOG_LAVA_STRENGTH 1.0 // [0.0 0.25 0.5 0.75 1.0 1.5 2.0]
+#define FOG_POWDER_SNOW_STRENGTH 1.0 // [0.0 0.25 0.5 0.75 1.0 1.5 2.0]
+#define FOG_BLINDNESS_STRENGTH 1.0 // [0.0 0.25 0.5 0.75 1.0 1.5 2.0]
+#define FOG_DARKNESS_STRENGTH 1.0 // [0.0 0.25 0.5 0.75 1.0 1.5 2.0]
+#define TRANSPARENT_WATER
+#define WATER_OPACITY 0.45 // [0.05 0.10 0.15 0.20 0.25 0.30 0.35 0.40 0.45 0.50 0.60 0.75 1.0]
+#define WATER_R 0.10 // [0.0 0.05 0.10 0.15 0.25 0.50 0.75 1.0]
+#define WATER_G 0.75 // [0.0 0.10 0.25 0.50 0.60 0.75 0.85 1.0]
+#define WATER_B 0.60 // [0.0 0.10 0.25 0.50 0.60 0.75 0.85 1.0]
+//#define WATER_WAVES
+//#define WATER_RIPPLES
+#define WATER_WAVE_STRENGTH 1.0 // [0.0 0.25 0.5 0.75 1.0 1.5 2.0]
+#define WATER_RIPPLE_STRENGTH 1.0 // [0.0 0.25 0.5 0.75 1.0 1.5 2.0]
+#define TORCH_AMOUNT 1.0 // [0.0 0.5 0.75 1.0 1.2 1.4 1.6 1.8 2.0]
+#define TORCH_R 1.0 // [0.0 0.05 0.1 0.25 0.5 0.75 1.0]
+#define TORCH_G 0.42 // [0.0 0.05 0.1 0.25 0.42 0.5 0.75 1.0]
+#define TORCH_B 0.11 // [0.0 0.05 0.1 0.11 0.25 0.5 0.75 1.0]
+#define EXPOSURE_MULTIPLIER 1.0 // [0.25 0.4 0.5 0.6 0.7 0.75 0.8 0.85 0.9 0.95 1.0 1.1 1.2 1.3 1.4 1.5 2.0 3.0 4.0]
+//#define TONEMAP_ACES
+#define SUN_GLARE
+#define SUN_GLARE_SAMPLES 1000 // [16 32 64 128 256 512 1000]
+#endif

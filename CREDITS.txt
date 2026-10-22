@@ -1,0 +1,40 @@
+BurntToast (Chocapic13' Shaders edit)
+
+Base shaderpack:
+  Chocapic13 / Choca_13 - Chocapic13' High Performance Toaster
+  https://www.curseforge.com/minecraft/shaders/chocapic13-high-performance-shaders
+  Original lighting, shadows, sky lookup tables, tone mapping and geometry programs.
+  Original modification notices are retained in the source.
+
+Borrowed material and displacement:
+  MLGImposter / mlgimposter and NoComment / NoComment1105 - YoFPS
+  https://github.com/NoComment1105/YoFPS-Chocapic13-edit
+  https://www.curseforge.com/minecraft/shaders/yofps-shader-chocapic13-edit
+  Transparent-water color/opacity construction and optional two-wave displacement.
+  Ported from the supplied YoFPS High reference, not the current upstream revision.
+
+References and inspiration (no code copied):
+  Thompie__ - CH Motion V4
+  https://www.curseforge.com/minecraft/shaders/ch-motion
+  Motion-blur controls, selectable values and defaults. BurntToast implements its
+  own camera-reprojection blur; CH Motion source/archives are not redistributed.
+
+  X0nk and the Bliss contributors - Bliss Shader
+  https://github.com/X0nk/Bliss-Shader
+  Repository layout, small-sample blur and feature/profile organization reference.
+  Bliss code is not included in this pack.
+
+Documentation:
+  IrisShaders contributors - ShaderDoc and Iris
+  https://deepwiki.com/IrisShaders/ShaderDoc
+  https://github.com/IrisShaders/ShaderDoc
+  https://github.com/IrisShaders/Iris
+  Uniforms, dimension routing, program fallbacks and translucent hand rendering.
+
+Original upstream acknowledgments:
+  Daxnitro; Karyonix; sp614x; DeDelner; Sildur; Continuum shader team;
+  Sasukedll7170; Alexei03a. See Chocapic13's original project for contribution details.
+
+BurntToast integration and original additions:
+  liwwyy - pack maintenance, neutral surface visibility, fog controls, hand mask,
+  neutral hand/entity lighting, independent motion blur and release tooling.
