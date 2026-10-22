@@ -145,3 +145,13 @@ option.END_SKY_TEXTURE=End Sky Texture
 option.END_SKY_TEXTURE.comment=Complementary-derived noise layer. Four texture reads per sky pixel; no volumetric ray marching or flashes.
 option.END_SKY_BRIGHTNESS=End Sky Brightness
 option.END_SKY_TEXTURE_STRENGTH=End Sky Texture Strength
+
+screen.Vegetation=Vegetation
+option.END_MIN_VISIBILITY_STRENGTH=End Minimum Illumination
+option.END_MIN_VISIBILITY_STRENGTH.comment=Separate illumination floor for End surfaces. Default 0.0 preserves the End's natural darkness.
+option.WAVING_LEAVES=Waving Leaves
+option.WAVING_PLANTS=Waving Grass / Flowers / Crops
+option.WAVING_VINES=Waving Vines
+option.WAVING_FIRE=Waving Fire
+option.WAVING_SPEED=Animation Speed
+option.WAVING_STRENGTH=Animation Strength

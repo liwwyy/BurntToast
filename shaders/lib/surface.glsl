@@ -7,7 +7,11 @@ float btLuminance(vec3 value) {
 vec3 btSurfaceLight(vec3 illumination) {
     illumination = max(illumination, vec3(0.0));
     #ifdef MINIMUM_VISIBILITY
-        illumination = max(illumination, vec3(MIN_VISIBILITY_STRENGTH));
+        #ifdef BT_END
+            illumination = max(illumination, vec3(END_MIN_VISIBILITY_STRENGTH));
+        #else
+            illumination = max(illumination, vec3(MIN_VISIBILITY_STRENGTH));
+        #endif
     #endif
     return illumination;
 }

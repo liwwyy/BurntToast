@@ -17,7 +17,7 @@ Borrowed motion blur:
   Thompie__ - CH Motion V4
   https://www.curseforge.com/minecraft/shaders/ch-motion
   MotionBlur.glsl and final.vsh copied byte-for-byte from the supplied archive.
-  BurntToast supplies only an outer optional hand-mask adapter.
+  BurntToast supplies an outer optional hand-mask and texture-sampling adapter.
 
 Adapted End sky:
   EminGT / Complementary Development - Complementary Reimagined r5.9.3
@@ -25,6 +25,15 @@ Adapted End sky:
   End star field, endSkyColor palette, BeamNoise construction and noise.png.
   Beam-dependent attenuation, volumetric beams, ray marching, flashes and other
   heavy effects are omitted. Upstream license retained in licenses/.
+
+Adapted foliage movement:
+  Sildur - Sildur's Enhanced Default v1.20 Fancy
+  https://sildurs-shaders.github.io/
+  Two-stage calcWave/calcMove, category amplitudes and animation timing adapted
+  from the supplied archive. Modern block mapping and matching shadow movement
+  integrated by BurntToast. Water continues to use the YoFPS adaptation.
+  Original permission notice retained in licenses/Sildur-Enhanced-Default-Notice.txt.
+  This project does not grant redistribution rights for Sildur's code.
 
 References and inspiration (no code copied):
   X0nk and the Bliss contributors - Bliss Shader

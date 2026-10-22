@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.1.5 — awaiting visual testing
+
+- Disable leaves, plants, vines and fire waving by default in both profiles.
+  Keep all animation controls available with speed/strength defaults of 1.0.
+- Keep water waves and ripples disabled by default.
+- Document that Sildur has no explicit Litematica patch in the supplied archive,
+  and that the same blurry schematic textures occur with Sildur. Upstream Iris
+  issue #2974 has no posted fix; no renderer compatibility workaround is claimed.
+- Retain the v0.1.4 hand-edge blur and End lighting/sky fixes.
+
+## 0.1.4 — awaiting visual testing
+
+- Prevent background motion-blur taps from sampling hands or held items, including
+  all four texels in a filtered edge footprint. Keep the CH Motion source unchanged.
+- Give End surfaces a separate minimum illumination default of 0.0; keep 0.08
+  as the Overworld/Nether default.
+- Remove polar star attenuation and use continuous triplanar End sky texture mapping
+  to eliminate the former circular caps and hemispheric texture seam.
+- Add Sildur Enhanced Default v1.20 Fancy foliage/fire waving, with category, speed
+  and strength controls, modern block mappings, and matching Overworld shadows.
+- Document the upstream Iris/MaLiLib texture-atlas issue affecting Litematica overlays.
+
 ## 0.1.3
 
 - Replace BurntToast blur with the supplied CH Motion V4 implementation unchanged.

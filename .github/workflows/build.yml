@@ -55,6 +55,10 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ github.ref_name }}
         run: |
+          # A maintainer may publish immediately using locally validated assets.
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            exit 0
+          fi
           gh release create "$RELEASE_TAG" dist/*.zip dist/*.sha256 \
             --verify-tag --draft \
             --title "BurntToast $RELEASE_TAG (Chocapic13' Shaders edit)" \

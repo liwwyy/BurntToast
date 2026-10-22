@@ -2,6 +2,7 @@
 """Pack contract checks and CPU numerical sanity checks (not visual tests)."""
 from pathlib import Path
 import hashlib
+import math
 import re
 import tempfile
 import unittest
@@ -65,15 +66,24 @@ class PackChecks(unittest.TestCase):
         options = scalar_options()
         expected = {"MOTION_BLUR_STRENGTH": 5.5, "MOTION_BLUR_SAMPLES": 8,
                     "VANILLA_GAMMA": 1.0, "MIN_VISIBILITY_STRENGTH": 0.08,
+                    "END_MIN_VISIBILITY_STRENGTH": 0.0, "WAVING_STRENGTH": 1.0, "WAVING_SPEED": 1.0,
                     "FOG_START": 0.90, "FOG_END": 1.0, "FOG_STRENGTH": 0.25,
                     "WATER_OPACITY": 0.45, "shadowMapResolution": 768, "shadowDistance": 48}
         for name, value in expected.items():
             self.assertEqual(float(options[name][0]), value, name)
         settings = (SHADERS / "lib/settings.glsl").read_text()
         self.assertRegex(settings, r"(?m)^#define SUN_GLARE$")
-        for switch in ("WATER_WAVES", "WATER_RIPPLES"):
+        for switch in ("WATER_WAVES", "WATER_RIPPLES", "WAVING_LEAVES",
+                       "WAVING_PLANTS", "WAVING_VINES", "WAVING_FIRE"):
             self.assertRegex(settings, rf"(?m)^//#define {switch}$")
         properties = (SHADERS / "shaders.properties").read_text()
+        default = next(line for line in properties.splitlines() if line.startswith("profile.DEFAULT="))
+        fast = next(line for line in properties.splitlines() if line.startswith("profile.FAST="))
+        self.assertIn("profile.DEFAULT", fast.split("=", 1)[1].split())
+        for switch in ("WAVING_LEAVES", "WAVING_PLANTS", "WAVING_VINES", "WAVING_FIRE"):
+            self.assertIn("!" + switch, default.split("=", 1)[1].split())
+            self.assertNotIn(switch, fast.split())
+            self.assertEqual(validate.VARIANTS["effects"][switch], "")
         for line in properties.splitlines():
             if line.startswith("profile."):
                 for token in line.split("=", 1)[1].split():
@@ -162,6 +172,43 @@ class PackChecks(unittest.TestCase):
             self.assertEqual(actual * 0.0, 0.0)  # Preserve black texture pixels.
             if lighting >= minimum:
                 self.assertEqual(actual, lighting)
+
+    def test_hand_edge_sampling_rejects_filtered_hand_colors(self):
+        # A red hand texel adjacent to black background. Nearest-mask checks miss
+        # fractional taps whose bilinear footprint still contains hand color.
+        pixels = [0.0, 0.0, 1.0, 0.0, 0.0]
+        def footprint(x):
+            low = math.floor(x - 0.5)
+            return [max(0, min(len(pixels) - 1, low + k)) for k in (0, 1)]
+        def sample(x):
+            lo, hi = footprint(x)
+            alpha = (x - 0.5) % 1.0
+            return pixels[lo] * (1 - alpha) + pixels[hi] * alpha
+        taps = [1.6, 1.9, 2.1, 2.5, 2.9, 3.1, 3.4]
+        self.assertGreater(sum(sample(x) for x in taps), 0.0)
+        # Center is black background; replacement keeps all hand colors out.
+        protected = [0.0 if any(pixels[i] for i in footprint(x)) else sample(x) for x in taps]
+        self.assertEqual(sum(protected), 0.0)
+        self.assertEqual(pixels[math.floor(1.9)], 0.0)
+        self.assertGreater(sample(1.9), 0.0)  # old nearest-mask failure
+        source = (SHADERS / "program/final.fsh").read_text()
+        self.assertIn("#define texture btMotionTexture", source)
+        self.assertEqual(source.count("texelFetch(colortex2"), 4)
+
+    def test_waving_block_mappings_are_disjoint(self):
+        source = (SHADERS / "block.properties").read_text().split("#else")[0]
+        mappings = dict(re.findall(r"(?m)^block\.(\d+)\s*=\s*([^\n]+)", source))
+        seen = set()
+        for value in mappings.values():
+            blocks = value.split()
+            self.assertFalse(seen.intersection(blocks))
+            seen.update(blocks)
+        self.assertIn("minecraft:cherry_leaves", mappings["10018"])
+        self.assertIn("minecraft:tall_grass:half=upper", mappings["10176"])
+        self.assertIn("minecraft:tall_grass:half=lower", mappings["10175"])
+        for program in ("overworld/gbuffers_terrain.vsh", "nether/gbuffers_terrain.vsh",
+                        "end/gbuffers_terrain.vsh", "overworld/shadow.vsh"):
+            self.assertIn("btVegetationOffset(", (SHADERS / "program" / program).read_text())
 
     def test_reproducible_package_and_root_layout(self):
         with tempfile.TemporaryDirectory() as directory:

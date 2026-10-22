@@ -5,7 +5,7 @@ float GetEnderStarNoise(vec2 pos) {
 }
 
 vec3 GetEnderStars(vec3 viewPos, float VdotU) {
-    vec3 wpos = normalize((gbufferModelViewInverse * vec4(viewPos * 1000.0, 1.0)).xyz);
+    vec3 wpos = normalize(mat3(gbufferModelViewInverse) * viewPos);
 
     vec3 starCoord = 0.65 * wpos / (abs(wpos.y) + length(wpos.xz));
     vec2 starCoord2 = starCoord.xz * 0.5;
@@ -22,11 +22,8 @@ vec3 GetEnderStars(vec3 viewPos, float VdotU) {
 
     vec3 enderStars = star * endSkyColor * 3000.0;
 
-    float absVdotU = abs(VdotU);
-    float VdotUM2 = pow2(1.0 - absVdotU);
-    enderStars *= min(VdotUM2 + 0.015, 0.05) + 0.015;
-
-    // BurntToast: omit beam/altitude attenuation with the volumetric effects.
+    // Uniform attenuation avoids the old circular dark caps at both poles.
+    enderStars *= 0.065;
 
     return enderStars * END_STAR_INTENSITY;
 }

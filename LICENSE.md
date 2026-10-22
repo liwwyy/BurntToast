@@ -1,9 +1,12 @@
 # BurntToast redistribution terms
 
-Version 0.1.3 also contains CH Motion V4 source and adapted Complementary
+Version 0.1.5 also contains CH Motion V4 source and adapted Complementary
 code/assets. Each component retains its upstream rights and terms. This file
 provides no additional grant for CH Motion and does not override the unmodified
-Complementary license in licenses/Complementary-License.txt.
+Complementary license in licenses/Complementary-License.txt. The Sildur-derived
+vegetation code retains the restrictive upstream notice in
+licenses/Sildur-Enhanced-Default-Notice.txt; this project grants no additional
+rights to that component.
 
 BurntToast is a modification of Chocapic13' High Performance Toaster, with
 transparent water material and wave displacement adapted from YoFPS.

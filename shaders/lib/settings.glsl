@@ -1,12 +1,19 @@
 #ifndef BURNTTOAST_SETTINGS
 #define BURNTTOAST_SETTINGS
-// BurntToast 0.1.3 (Chocapic13' Shaders edit)
+// BurntToast 0.1.5 (Chocapic13' Shaders edit)
 // Motion-blur controls are declared in the unchanged CH Motion source.
 #define EXCLUDE_HAND_MOTION_BLUR
 #define REMOVE_HAND_TINT
 #define REMOVE_ENTITY_DIMENSION_TINT
 #define MINIMUM_VISIBILITY
 #define MIN_VISIBILITY_STRENGTH 0.08 // [0.0 0.01 0.02 0.03 0.04 0.05 0.06 0.08 0.10 0.12 0.16 0.20]
+#define END_MIN_VISIBILITY_STRENGTH 0.0 // [0.0 0.01 0.02 0.03 0.04 0.05 0.06 0.08 0.10 0.12 0.16 0.20]
+//#define WAVING_LEAVES
+//#define WAVING_PLANTS
+//#define WAVING_VINES
+//#define WAVING_FIRE
+#define WAVING_SPEED 1.0 // [0.25 0.5 0.75 1.0 1.25 1.5 1.75 2.0]
+#define WAVING_STRENGTH 1.0 // [0.0 0.25 0.5 0.75 1.0 1.25 1.5 2.0]
 #define FOG_ENABLED
 #define FOG_START 0.90 // [0.0 0.25 0.5 0.6 0.7 0.75 0.8 0.85 0.90 0.95 0.98]
 #define FOG_END 1.0 // [0.25 0.5 0.75 0.85 0.90 0.95 1.0]

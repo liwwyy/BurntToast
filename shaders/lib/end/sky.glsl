@@ -21,12 +21,14 @@ vec3 btEndSky(vec3 viewDirection) {
     vec3 worldDirection = normalize(mat3(gbufferModelViewInverse) * viewDirection);
     vec3 sky = endSkyColor;
     #ifdef END_SKY_TEXTURE
-        vec2 plane = worldDirection.xz / (abs(worldDirection.y) + length(worldDirection.xz));
-        if (worldDirection.y < 0.0) plane += vec2(2.0);
+        vec3 weights = pow(abs(worldDirection), vec3(4.0));
+        weights /= weights.x + weights.y + weights.z;
         vec2 wind = vec2(frameTimeCounter * 0.001);
-        float noise = btEndSkyNoise(plane * 4.0, wind);
-        float fireNoise = textureLod(btEndNoise, abs(plane * 0.4) - wind, 0.0).b;
-        float textureLayer = noise * noise * 0.7 + 0.3 * fireNoise;
+        float noise = dot(weights, vec3(
+            btEndSkyNoise(worldDirection.yz * 4.0, wind),
+            btEndSkyNoise(worldDirection.zx * 4.0, wind),
+            btEndSkyNoise(worldDirection.xy * 4.0, wind)));
+        float textureLayer = noise * noise;
         sky *= max(0.0, 1.0 + (textureLayer - 0.45) * END_SKY_TEXTURE_STRENGTH);
     #endif
     sky *= END_SKY_BRIGHTNESS;

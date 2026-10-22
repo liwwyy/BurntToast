@@ -11,6 +11,11 @@ out vec4 color;
 out vec4 shadowPos;
 
 attribute vec4 mc_Entity;
+attribute vec4 mc_midTexCoord;
+uniform vec3 cameraPosition;
+uniform float frameTimeCounter;
+uniform mat4 gbufferModelView;
+#include "/lib/waving.glsl"
 
 uniform vec3 sunVec;
 uniform vec4 lightCol;
@@ -28,7 +33,11 @@ vec4 toClipSpace3(vec3 viewSpacePosition) {
 void main() {
 	vec3 normal = gl_NormalMatrix * gl_Normal;
 	vec3 position = mat3(gl_ModelViewMatrix) * vec3(gl_Vertex) + gl_ModelViewMatrix[3].xyz;
-	lmtexcoord.xy = gl_MultiTexCoord0.xy;
+	vec3 world = (gbufferModelViewInverse * vec4(position, 1.0)).xyz;
+    world += btVegetationOffset(world + cameraPosition, mc_Entity.x,
+        gl_MultiTexCoord0.t < mc_midTexCoord.t, frameTimeCounter);
+    position = (gbufferModelView * vec4(world, 1.0)).xyz;
+    lmtexcoord.xy = gl_MultiTexCoord0.xy;
 
 
 	float NdotU = gl_Normal.y*(0.17*15.5/255.)+(0.83*15.5/255.);
@@ -58,7 +67,7 @@ void main() {
   #endif
 
 
-  if (mc_Entity.x == 10001){
+  if (mc_Entity.x == 10001 || btVegetation(mc_Entity.x)){
     shadowPos.w = -2.0;
     diffuseSun = diffuseSun*0.35+0.4;
     color.rgb *= 1.1;
