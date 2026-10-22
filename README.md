@@ -1,7 +1,5 @@
 # BurntToast (Chocapic13' Shaders edit)
 
-**Local testing build: publishing is deferred. See LOCAL_ONLY.md.**
-
 An Iris shaderpack based on Chocapic13 High Performance Toaster. Version 0.1.3
 adds motion blur, readable darkness, neutral hand and entity lighting, edge-only
 fog controls, and transparent water from YoFPS.
@@ -29,7 +27,7 @@ LOD rendering are not implemented.
 
 ## Install
 
-Use the locally built `BurntToast_v0.1.3_.Chocapic13_Toaster_edit.zip`,
+Download `BurntToast_v0.1.3_.Chocapic13_Toaster_edit.zip` from the GitHub release,
 place it in your Minecraft `shaderpacks` directory, then select it in Iris.
 The build is targeted at Minecraft 26.2 with Iris 1.11.4. Other versions have
 not been tested.
@@ -74,8 +72,8 @@ python .github/scripts/package.py
 
 The ZIP and SHA-256 checksum are written to `dist/`. Reference ZIPs, build files,
 and development tooling are excluded. Release tags must match `VERSION`.
-The LOCAL_ONLY.md marker blocks CI artifact/release publication. The public
-repository remains at v0.1.2; this build is not pushed or released.
+Version tags create draft GitHub releases after validation. Release assets
+include the shader ZIP and its SHA-256 checksum.
 
 Standalone compilation and numerical checks do not establish in-game rendering
 correctness or FPS gains. See [TESTING.md](TESTING.md) and
@@ -89,6 +87,6 @@ by Thompie__ supplies the unchanged blur code. Complementary by EminGT supplies
 the adapted End sky/star code and noise texture. Bliss by X0nk is the repository
 and optimization reference. Full details are in [CREDITS.txt](CREDITS.txt).
 
-Upstream [modification and sharing terms](LICENSE.md) are retained for review.
-Publication of this combined local build is deferred.
+Upstream [modification and sharing terms](LICENSE.md) and the unmodified
+Complementary license are retained alongside the credits.
 Original code remains credited to its authors. No monetizing download links.

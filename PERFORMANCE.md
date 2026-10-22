@@ -1,7 +1,7 @@
 # Performance notes
 
-v0.1.3 is a local-only build with unchanged CH Motion code and a lightweight
-Complementary-derived End sky. Publication is deferred.
+v0.1.3 uses unchanged CH Motion code and a lightweight Complementary-derived
+End sky.
 
 BurntToast keeps Toaster's forward rendering and compact lighting/sky lookup
 computation. Default shadows stay at 768 resolution and 48 blocks. Motion blur

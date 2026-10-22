@@ -71,7 +71,7 @@ and Iris's `patched_shaders` directory. These can be inspected without GUI input
 
 ## Release gate
 
-The current v0.1.3 build is local-only. Do not push or publish its borrowed
-CH Motion / Complementary integration until the user resolves publication.
-The public repository remains at v0.1.2.
+Version tags prepare draft releases after automated checks. Publishing is
+explicitly requested by the maintainer. Automated validation does not establish
+in-game visual correctness or measured FPS gains.
 Retain any limitations and measured performance results in the release notes.

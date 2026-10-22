@@ -13,13 +13,13 @@ Borrowed material and displacement:
   Transparent-water color/opacity construction and optional two-wave displacement.
   Ported from the supplied YoFPS High reference, not the current upstream revision.
 
-Borrowed motion blur (local build; publication deferred):
+Borrowed motion blur:
   Thompie__ - CH Motion V4
   https://www.curseforge.com/minecraft/shaders/ch-motion
   MotionBlur.glsl and final.vsh copied byte-for-byte from the supplied archive.
   BurntToast supplies only an outer optional hand-mask adapter.
 
-Adapted End sky (local build; publication deferred):
+Adapted End sky:
   EminGT / Complementary Development - Complementary Reimagined r5.9.3
   https://www.complementary.dev/shaders/
   End star field, endSkyColor palette, BeamNoise construction and noise.png.

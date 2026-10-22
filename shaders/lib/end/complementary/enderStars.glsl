@@ -1,5 +1,5 @@
 // Adapted from Complementary Reimagined r5.9.3 by EminGT.
-// Local build; see licenses/Complementary-License.txt.
+// See licenses/Complementary-License.txt.
 float GetEnderStarNoise(vec2 pos) {
     return fract(sin(dot(pos, vec2(12.9898, 4.1414))) * 43758.54953);
 }

@@ -15,8 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - name: Block local-only build publication
-        run: test ! -f LOCAL_ONLY.md
       - uses: actions/setup-python@v7
         with:
           python-version: '3.12'

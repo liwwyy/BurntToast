@@ -89,8 +89,8 @@ class PackChecks(unittest.TestCase):
             self.assertEqual(hashlib.sha256((SHADERS / folder / "final.vsh").read_bytes()).hexdigest(),
                              "f2bbbf92776f7c80a680887af39e9deef8d11e86fdae2581533e5a47b1efe2dc")
 
-    def test_local_publication_boundary_and_end_asset(self):
-        self.assertTrue((ROOT / "LOCAL_ONLY.md").is_file())
+    def test_release_assets_and_defaults(self):
+        self.assertFalse((ROOT / "LOCAL_ONLY.md").exists())
         self.assertTrue((ROOT / "licenses/Complementary-License.txt").is_file())
         self.assertTrue((SHADERS / "texture/complementary-noise.png").read_bytes().startswith(b"\x89PNG\r\n\x1a\n"))
         properties = (SHADERS / "shaders.properties").read_text()
@@ -174,7 +174,7 @@ class PackChecks(unittest.TestCase):
                 self.assertIn("shaders/shaders.properties", names)
                 self.assertIn("CREDITS.txt", names)
                 self.assertIn("LICENSE.md", names)
-                self.assertIn("LOCAL_ONLY.md", names)
+                self.assertNotIn("LOCAL_ONLY.md", names)
                 self.assertIn("licenses/Complementary-License.txt", names)
                 self.assertFalse(any(n.startswith(("reference/", ".github/", ".build/")) for n in names))
                 version = (ROOT / "VERSION").read_text().strip()

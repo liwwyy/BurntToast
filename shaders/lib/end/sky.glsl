@@ -1,7 +1,7 @@
 #ifndef BURNTTOAST_END_SKY
 #define BURNTTOAST_END_SKY
 // Palette, star field and noise-layer construction adapted from Complementary
-// Reimagined r5.9.3 by EminGT. Local build: see the preserved upstream license.
+// Reimagined r5.9.3 by EminGT. See the preserved upstream license.
 uniform sampler2D btEndNoise;
 uniform vec3 cameraPosition;
 uniform float frameTimeCounter;
