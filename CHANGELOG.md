@@ -1,6 +1,13 @@
 # Changelog
 
-## 0.1.0 — awaiting visual testing
+## 0.1.1 — awaiting visual testing
+
+- Fix Iris pack-load crash in DispatchingDirectiveHolder: use four explicit float
+  literals for colortex2ClearColor instead of GLSL's scalar vec4 constructor.
+- Check Iris clear-color directive syntax independently of GLSL compilation.
+- Retain all v0.1.0 feature defaults.
+
+## 0.1.0 — superseded by 0.1.1
 
 - Import Chocapic13 High Performance Toaster and organize shared dimension programs.
 - Add independent camera motion blur with CH Motion-compatible controls/defaults.

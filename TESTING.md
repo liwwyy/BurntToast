@@ -1,9 +1,9 @@
-# Testing BurntToast 0.1.0
+# Testing BurntToast 0.1.1
 
 ## Automated checks
 
 Run `python .github/scripts/check.py` for include paths, option discovery and
-defaults, hand-mask routing, version consistency, reproducible ZIP layout, and
+defaults, Iris clear-color directive syntax, hand-mask routing, version consistency, reproducible ZIP layout, and
 CPU reference checks for fog boundaries, blur energy and minimum illumination.
 
 Run `python .github/scripts/validate.py` for standalone GLSL 330 compatibility
@@ -48,6 +48,6 @@ and Iris's `patched_shaders` directory. These can be inspected without GUI input
 
 ## Release gate
 
-The public repository and draft v0.1.0 release are prepared after automated
+The public repository and draft v0.1.1 release are prepared after automated
 checks. Publish the draft only after the user confirms the visual checks pass.
 Retain any limitations and measured performance results in the release notes.

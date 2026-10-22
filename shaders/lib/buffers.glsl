@@ -4,4 +4,5 @@ const int colortex1Format = R11F_G11F_B10F;
 const int colortex2Format = R8;
 const int colortex4Format = R11F_G11F_B10F;
 const bool colortex2Clear = true;
-const vec4 colortex2ClearColor = vec4(0.0);
+// Iris directive parsing requires four literals, even though GLSL allows vec4(0.0).
+const vec4 colortex2ClearColor = vec4(0.0, 0.0, 0.0, 0.0);

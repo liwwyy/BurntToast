@@ -1,6 +1,11 @@
-BurntToast (Chocapic13' Shaders edit) v0.1.0
+BurntToast (Chocapic13' Shaders edit) v0.1.1
 
-Adds camera motion blur with CH Motion-compatible settings, hand/held-item blur
+Fixes the Iris shaderpack-load crash (`ArrayIndexOutOfBoundsException` in
+`DispatchingDirectiveHolder.processDirective`). The hand-mask clear color now
+uses four explicit float literals, as required by Iris's directive parser.
+A regression check catches scalar constructors that GLSL compilation accepts.
+
+Includes camera motion blur with CH Motion-compatible settings, hand/held-item blur
 exclusion, neutral hand/entity lighting, a minimum visibility floor, configurable
 edge-only fog, and YoFPS-derived transparent water. Waves and ripples default off.
 

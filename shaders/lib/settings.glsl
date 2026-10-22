@@ -1,6 +1,6 @@
 #ifndef BURNTTOAST_SETTINGS
 #define BURNTTOAST_SETTINGS
-// BurntToast 0.1.0 (Chocapic13' Shaders edit)
+// BurntToast 0.1.1 (Chocapic13' Shaders edit)
 // CH Motion-compatible controls; implementation is original to BurntToast.
 #define MOTION_BLUR
 #define MOTION_BLUR_NOISE

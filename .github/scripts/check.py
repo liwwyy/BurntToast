@@ -89,7 +89,15 @@ class PackChecks(unittest.TestCase):
                 self.assertIn("btHandLight", source)
         directives = (SHADERS / "lib/buffers.glsl").read_text()
         self.assertIn("colortex2Clear = true", directives)
-        self.assertIn("colortex2ClearColor = vec4(0.0)", directives)
+        self.assertIn("colortex2ClearColor = vec4(0.0, 0.0, 0.0, 0.0)", directives)
+
+    def test_iris_clear_color_directive_uses_four_literals(self):
+        for vertex in validate.entrypoints():
+            validate.validate_iris_directives(validate.expand(vertex.with_suffix(".fsh")))
+        for invalid in ("vec4(0.0)", "vec4(0.0, 0.0)", "vec4(0.0, 0.0, 0.0, 1.0 / 2.0)"):
+            with self.assertRaises(ValueError):
+                validate.validate_iris_directives(f"const vec4 colortex2ClearColor = {invalid};")
+        validate.validate_iris_directives("const vec4 colortex2ClearColor = vec4(0.0, 0.0, 0.0, 0.0);")
 
     def test_disabling_boolean_does_not_remove_next_option(self):
         source = validate.expand(SHADERS / "world0/composite.fsh", {"FOG_ENABLED": None})

@@ -64,6 +64,21 @@ def entrypoints():
                   if p.parent == SHADERS or p.parent.name in ("world0", "world-1", "world1"))
 
 
+def validate_iris_directives(source):
+    # Iris DispatchingDirectiveHolder parses clear colors separately from GLSL.
+    # Scalar splats and expressions compile as GLSL but cannot be parsed here.
+    pattern = r"const\s+vec4\s+((?:colortex\d+|shadowcolor\d+)ClearColor)\s*=\s*([^;]+);"
+    for name, value in re.findall(pattern, source):
+        match = re.fullmatch(r"vec4\s*\(([^()]*)\)", value.strip())
+        if not match or len(match[1].split(",")) != 4:
+            raise ValueError(f"Iris directive {name} requires four explicit float literals")
+        for part in match[1].split(","):
+            try:
+                float(part.strip().rstrip("fF"))
+            except ValueError as exc:
+                raise ValueError(f"Iris directive {name} requires float literals: {part}") from exc
+
+
 def compile_pair(task):
     path, variant, overrides = task
     out = ROOT / ".build" / "glsl" / variant / path.parent.relative_to(SHADERS)
@@ -73,6 +88,7 @@ def compile_pair(task):
         original = path.with_suffix(suffix)
         target = out / (path.stem + stage)
         source = expand(original, overrides)
+        validate_iris_directives(source)
         # Iris injects OpenGL format names into shader source; standalone GLSL does not.
         source = source.replace("#version 330 compatibility", "#version 330 compatibility\n#define MC_VERSION 260200\n#define IS_IRIS\n#define RGB8 32849\n#define R8 33321\n#define R11F_G11F_B10F 35898")
         target.write_text(source)
