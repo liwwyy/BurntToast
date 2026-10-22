@@ -13,12 +13,20 @@ Borrowed material and displacement:
   Transparent-water color/opacity construction and optional two-wave displacement.
   Ported from the supplied YoFPS High reference, not the current upstream revision.
 
-References and inspiration (no code copied):
+Borrowed motion blur (local build; publication deferred):
   Thompie__ - CH Motion V4
   https://www.curseforge.com/minecraft/shaders/ch-motion
-  Motion-blur controls, selectable values and defaults. BurntToast implements its
-  own camera-reprojection blur; CH Motion source/archives are not redistributed.
+  MotionBlur.glsl and final.vsh copied byte-for-byte from the supplied archive.
+  BurntToast supplies only an outer optional hand-mask adapter.
 
+Adapted End sky (local build; publication deferred):
+  EminGT / Complementary Development - Complementary Reimagined r5.9.3
+  https://www.complementary.dev/shaders/
+  End star field, endSkyColor palette, BeamNoise construction and noise.png.
+  Beam-dependent attenuation, volumetric beams, ray marching, flashes and other
+  heavy effects are omitted. Upstream license retained in licenses/.
+
+References and inspiration (no code copied):
   X0nk and the Bliss contributors - Bliss Shader
   https://github.com/X0nk/Bliss-Shader
   Repository layout, small-sample blur and feature/profile organization reference.
@@ -37,4 +45,4 @@ Original upstream acknowledgments:
 
 BurntToast integration and original additions:
   liwwyy - pack maintenance, neutral surface visibility, fog controls, hand mask,
-  neutral hand/entity lighting, independent motion blur and release tooling.
+  neutral hand/entity lighting, motion-blur integration and release tooling.

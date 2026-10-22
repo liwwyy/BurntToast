@@ -1,4 +1,4 @@
-# BurntToast 0.1.2
+# BurntToast 0.1.3
 profile.DEFAULT=Default
 profile.FAST=Fast
 screen.Lighting=Lighting
@@ -17,13 +17,13 @@ option.MOTION_BLUR.comment=Camera-motion blur. Moving entities do not have indep
 option.MOTION_BLUR_NOISE=Motion Blur Noise
 option.MOTION_BLUR_NOISE.comment=Jitter samples to reduce visible bands along the blur.
 option.MOTION_BLUR_STRENGTH=Motion Blur Strength
-option.MOTION_BLUR_STRENGTH.comment=Higher values increase blur. CH-compatible default: 5.5.
+option.MOTION_BLUR_STRENGTH.comment=Native CH Motion strength response and default: 5.5.
 option.MOTION_BLUR_SAMPLES=Motion Blur Samples
-option.MOTION_BLUR_SAMPLES.comment=Exact number of color samples per blurred pixel. More samples cost more GPU time.
+option.MOTION_BLUR_SAMPLES.comment=Native CH sample setting. Uses a centered odd sample count: setting 8 takes 7 samples. More samples cost more GPU time.
 option.VANILLA_GAMMA=Compatibility Gamma
 option.VANILLA_GAMMA.comment=Advanced post-blur gamma. Leave at 1.0 to preserve the shader tone mapping.
 option.EXCLUDE_HAND_MOTION_BLUR=Exclude Hand / Held Items from Blur
-option.EXCLUDE_HAND_MOTION_BLUR.comment=Keeps both hands and opaque/translucent held items sharp. Rejects hand pixels in surrounding blur samples.
+option.EXCLUDE_HAND_MOTION_BLUR.comment=Adds an explicit hand/held-item mask around unchanged CH Motion. CH Motion also always retains its native close-depth cutoff.
 option.REMOVE_HAND_TINT=Remove Hand / Held Item Shader Tint
 option.REMOVE_HAND_TINT.comment=Removes lighting color casts. Keeps texture colors, environment brightness and applicable shadows in every dimension.
 option.REMOVE_ENTITY_DIMENSION_TINT=Remove Entity Dimension Tint
@@ -31,7 +31,7 @@ option.REMOVE_ENTITY_DIMENSION_TINT.comment=Neutralizes Nether/End ambient illum
 option.MINIMUM_VISIBILITY=Minimum Visibility
 option.MINIMUM_VISIBILITY.comment=Adds neutral minimum illumination to surfaces, including sealed rooms. Does not brighten the sky or black texture pixels.
 option.MIN_VISIBILITY_STRENGTH=Minimum Illumination
-option.MIN_VISIBILITY_STRENGTH.comment=Higher values make unlit surfaces easier to see. Default 0.04; tune in a completely enclosed room.
+option.MIN_VISIBILITY_STRENGTH.comment=Higher values make unlit surfaces easier to see. Default 0.08; tune in a completely enclosed room.
 option.FOG_ENABLED=Fog
 option.FOG_ENABLED.comment=Master switch for every fog contribution implemented by this pack.
 option.FOG_START=Fog Start (% of Render Distance)
@@ -135,3 +135,13 @@ value.FOG_START.0.98=98%
 value.FOG_END.0.98=98%
 value.FOG_START.1.0=100%
 value.FOG_END.1.0=100%
+
+option.NETHER_SKY_MIN_BRIGHTNESS=Nether Sky Minimum Brightness
+option.NETHER_SKY_MIN_BRIGHTNESS.comment=Keeps the vanilla biome-colored Nether background faintly visible. Preserves its hue; does not add nearby fog.
+option.END_STARS=End Stars
+option.END_STARS.comment=Complementary-derived End stars, without volumetric beam/altitude attenuation.
+option.END_STAR_INTENSITY=End Star Intensity
+option.END_SKY_TEXTURE=End Sky Texture
+option.END_SKY_TEXTURE.comment=Complementary-derived noise layer. Four texture reads per sky pixel; no volumetric ray marching or flashes.
+option.END_SKY_BRIGHTNESS=End Sky Brightness
+option.END_SKY_TEXTURE_STRENGTH=End Sky Texture Strength

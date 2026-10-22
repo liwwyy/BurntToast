@@ -15,11 +15,11 @@ VARIANTS = {
     "disabled": {k: None for k in (
         "MOTION_BLUR", "MOTION_BLUR_NOISE", "EXCLUDE_HAND_MOTION_BLUR",
         "REMOVE_HAND_TINT", "REMOVE_ENTITY_DIMENSION_TINT", "MINIMUM_VISIBILITY",
-        "FOG_ENABLED", "TRANSPARENT_WATER", "SUN_GLARE")},
+        "FOG_ENABLED", "TRANSPARENT_WATER", "SUN_GLARE", "END_STARS", "END_SKY_TEXTURE")},
     "effects": {"WATER_WAVES": "", "WATER_RIPPLES": "", "TONEMAP_ACES": "",
                 "VANILLA_GAMMA": "1.5", "MOTION_BLUR_SAMPLES": "24"},
     "fast": {"MOTION_BLUR_SAMPLES": "4", "shadowMapResolution": "512",
-             "shadowDistance": "32.0", "SUN_GLARE": None},
+             "shadowDistance": "32.0"},
     "minimum": {"MIN_VISIBILITY_STRENGTH": "0.0", "FOG_START": "0.98",
                 "FOG_END": "0.25", "FOG_STRENGTH": "0.0",
                 "MOTION_BLUR_STRENGTH": "0.5", "WATER_OPACITY": "0.05"},

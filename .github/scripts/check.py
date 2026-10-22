@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Pack contract checks and CPU numerical sanity checks (not visual tests)."""
 from pathlib import Path
+import hashlib
 import re
 import tempfile
 import unittest
@@ -63,12 +64,13 @@ class PackChecks(unittest.TestCase):
     def test_reference_defaults_and_profiles(self):
         options = scalar_options()
         expected = {"MOTION_BLUR_STRENGTH": 5.5, "MOTION_BLUR_SAMPLES": 8,
-                    "VANILLA_GAMMA": 1.0, "MIN_VISIBILITY_STRENGTH": 0.04,
+                    "VANILLA_GAMMA": 1.0, "MIN_VISIBILITY_STRENGTH": 0.08,
                     "FOG_START": 0.90, "FOG_END": 1.0, "FOG_STRENGTH": 0.25,
                     "WATER_OPACITY": 0.45, "shadowMapResolution": 768, "shadowDistance": 48}
         for name, value in expected.items():
             self.assertEqual(float(options[name][0]), value, name)
         settings = (SHADERS / "lib/settings.glsl").read_text()
+        self.assertRegex(settings, r"(?m)^#define SUN_GLARE$")
         for switch in ("WATER_WAVES", "WATER_RIPPLES"):
             self.assertRegex(settings, rf"(?m)^//#define {switch}$")
         properties = (SHADERS / "shaders.properties").read_text()
@@ -78,6 +80,24 @@ class PackChecks(unittest.TestCase):
                     if "=" in token:
                         name, value = token.split("=", 1)
                         self.assertIn(float(value), [float(v) for v in options[name][1]], name)
+
+    def test_ch_motion_reference_is_copied_unchanged(self):
+        # Hashes of the two original files in the supplied CH_MotionV4.zip.
+        self.assertEqual(hashlib.sha256((SHADERS / "program/ch_motion/MotionBlur.glsl").read_bytes()).hexdigest(),
+                         "3de72df60bc9ecc27625e2011f1ec170132e3d4006ef6ce93ffff70c8146f45a")
+        for folder in ("", "world0", "world-1", "world1"):
+            self.assertEqual(hashlib.sha256((SHADERS / folder / "final.vsh").read_bytes()).hexdigest(),
+                             "f2bbbf92776f7c80a680887af39e9deef8d11e86fdae2581533e5a47b1efe2dc")
+
+    def test_local_publication_boundary_and_end_asset(self):
+        self.assertTrue((ROOT / "LOCAL_ONLY.md").is_file())
+        self.assertTrue((ROOT / "licenses/Complementary-License.txt").is_file())
+        self.assertTrue((SHADERS / "texture/complementary-noise.png").read_bytes().startswith(b"\x89PNG\r\n\x1a\n"))
+        properties = (SHADERS / "shaders.properties").read_text()
+        self.assertIn("texture.composite.btEndNoise=texture/complementary-noise.png", properties)
+        fast = next(line for line in properties.splitlines() if line.startswith("profile.FAST="))
+        self.assertIn(" SUN_GLARE", fast)
+        self.assertNotIn("!SUN_GLARE", fast)
 
     def test_hands_have_mask_and_explicit_translucent_programs(self):
         for folder in ("", "world0", "world-1", "world1"):
@@ -131,7 +151,8 @@ class PackChecks(unittest.TestCase):
 
     def test_blur_energy_and_surface_floor_reference(self):
         # Constant-color scenes must retain brightness at every supported count.
-        for count in (4, 6, 8, 10, 12, 16, 20, 24):
+        for setting in (4, 6, 8, 10, 12, 16, 20, 24):
+            count = 2 * ((setting - 1) // 2) + 1  # CH's unchanged centered odd count.
             for accepted in range(1, count + 1):
                 self.assertAlmostEqual(sum([0.37] * accepted) / accepted, 0.37)
         minimum = float(scalar_options()["MIN_VISIBILITY_STRENGTH"][0])
@@ -153,6 +174,8 @@ class PackChecks(unittest.TestCase):
                 self.assertIn("shaders/shaders.properties", names)
                 self.assertIn("CREDITS.txt", names)
                 self.assertIn("LICENSE.md", names)
+                self.assertIn("LOCAL_ONLY.md", names)
+                self.assertIn("licenses/Complementary-License.txt", names)
                 self.assertFalse(any(n.startswith(("reference/", ".github/", ".build/")) for n in names))
                 version = (ROOT / "VERSION").read_text().strip()
                 self.assertEqual(first.name, f"BurntToast_v{version}_.Chocapic13_Toaster_edit.zip")

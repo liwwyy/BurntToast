@@ -1,5 +1,8 @@
 # Performance notes
 
+v0.1.3 is a local-only build with unchanged CH Motion code and a lightweight
+Complementary-derived End sky. Publication is deferred.
+
 BurntToast keeps Toaster's forward rendering and compact lighting/sky lookup
 computation. Default shadows stay at 768 resolution and 48 blocks. Motion blur
 adds work compared with Toaster; a net FPS increase is not promised.
@@ -10,7 +13,7 @@ adds work compared with Toaster; a net FPS increase is not promised.
 | --- | --- | --- |
 | [YoFPS](https://github.com/NoComment1105/YoFPS-Chocapic13-edit/blob/main/shaders/shaders.properties) | Low/Normal/High profiles compile optional effects out. | Add Default/Fast profiles; compile water displacement and ripple distortion out by default. |
 | Supplied YoFPS High reference | Clear-water material uses color `(0.1, 0.75, 0.6)` and opacity `0.45`; waves are optional. Its larger final pass also computes water normals and reflections. | Port material and displacement only. Keep the lightweight Toaster pipeline; no reflection/refraction pipeline is added. |
-| [Bliss final pass](https://github.com/X0nk/Bliss-Shader/blob/Stable/shaders/dimensions/final.fsh) | Motion blur uses four color samples and clamps sample coordinates at screen edges. | Offer four samples in Fast; retain the requested eight in Default. Clamp samples and normalize the number actually accepted. No Bliss code is copied. |
+| [Bliss final pass](https://github.com/X0nk/Bliss-Shader/blob/Stable/shaders/dimensions/final.fsh) | Motion blur uses four color samples and clamps sample coordinates at screen edges. | Retain the CH reference kernel unchanged: sample setting 4 in Fast and 8 in Default. These map to 3 and 7 native taps. No Bliss code is copied. |
 | [Bliss program settings](https://github.com/X0nk/Bliss-Shader/blob/Stable/shaders/shaders.properties) | Optional programs and translucent blending are configured explicitly. | Use explicit opaque/translucent hand programs and per-attachment mask blending. Avoid adding intermediate post-process targets. |
 
 Upstream links describe the reviewed revision and may change. The supplied
@@ -24,7 +27,7 @@ recorded in `REFERENCE_SOURCES.md`.
   the final vertex program. Skip the color-sampling loop when the camera is still.
 - Use a compact R8 hand mask. A mask is more reliable than assuming every pixel
   closer than a fixed depth threshold belongs to a hand; it costs an attachment
-  and mask reads, including sample rejection around silhouettes.
+  and mask reads. The mask protects center pixels; CH Motion itself keeps its native depth cutoff and sampling unchanged.
 - Remove duplicate glare sample-position arithmetic. Disabling glare compiles
   its 1000-iteration visibility loop out. Default retains 1000 samples so partial
   sun occlusion is not deliberately degraded.
@@ -38,14 +41,16 @@ recorded in `REFERENCE_SOURCES.md`.
 
 ## Optional savings
 
-1. Use **Fast**: four blur samples; 512-resolution shadows; 32-block shadow range;
-   glare off. These are visual tradeoffs, not equivalent-quality optimizations.
+1. Use **Fast**: CH blur sample setting 4; 512-resolution shadows; 32-block shadow
+   range. Glare stays on by default. These are visual tradeoffs, not equivalent-quality optimizations.
 2. Lower Motion Blur Samples independently if you want to keep default shadows.
 3. Disable Sun / Moon Glare or lower its samples to 64–128. Check partial sun
    occlusion for flicker or visible sampling differences.
-4. Keep Water Waves and Water Surface Ripples off. Their disabled branches have
+4. The End sky uses Complementary stars and a four-read noise texture layer,
+   evaluated only for sky pixels. No volumetric beams, flashes or ray marching.
+5. Keep Water Waves and Water Surface Ripples off. Their disabled branches have
    no wave/ripple math in the compiled program.
-5. Disable motion blur entirely to compare the rest of BurntToast with Toaster.
+6. Disable motion blur entirely to compare the rest of BurntToast with Toaster.
 
 Further candidates, deferred until profiling: a fixed-size lookup attachment
 with updated sampling coordinates, reduced glare sampling with temporal

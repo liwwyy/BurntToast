@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.3 — local testing only; publishing deferred
+
+- Replace BurntToast blur with the supplied CH Motion V4 implementation unchanged.
+- Keep an outer optional hand mask; retain CH Motion's native hand-depth cutoff.
+- Set minimum illumination to 0.08; keep sun/moon glare on in both presets.
+- Use vanilla biome-blended Nether background/fog colors and a sky brightness floor.
+- Adapt Complementary r5.9.3 End stars and textured sky without volumetric beams,
+  flashes, ray marching, bloom, or reflections.
+- Preserve upstream credits/licenses and block artifact/release publication locally.
+
 ## 0.1.2 — awaiting visual testing
 
 - Fix composite compilation failures for undeclared RGB8, R8 and R11F_G11F_B10F.

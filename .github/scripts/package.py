@@ -18,6 +18,10 @@ def build(output):
     archive = output / f"BurntToast_v{version}_.Chocapic13_Toaster_edit.zip"
     files = sorted(p for p in (ROOT / "shaders").rglob("*") if p.is_file())
     files += [ROOT / n for n in ("CREDITS.txt", "LICENSE.md", "README.md", "CHANGELOG.md", "VERSION")]
+    if (ROOT / "LOCAL_ONLY.md").exists():
+        files.append(ROOT / "LOCAL_ONLY.md")
+    if (ROOT / "licenses").exists():
+        files += [p for p in (ROOT / "licenses").rglob("*") if p.is_file()]
     with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as pack:
         for path in sorted(files):
             entry = zipfile.ZipInfo(path.relative_to(ROOT).as_posix(), (2026, 1, 1, 0, 0, 0))

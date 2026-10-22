@@ -1,5 +1,10 @@
 # BurntToast redistribution terms
 
+**v0.1.3 is local-only.** This build additionally contains CH Motion source and
+adapted Complementary code/assets. No redistribution grant for this combined
+build is asserted here. Publication is deferred; see LOCAL_ONLY.md and the
+unmodified Complementary license in licenses/Complementary-License.txt.
+
 BurntToast is a modification of Chocapic13' High Performance Toaster, with
 transparent water material and wave displacement adapted from YoFPS.
 Upstream code remains the work of its respective authors. This project does
